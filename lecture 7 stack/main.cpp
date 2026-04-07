@@ -114,6 +114,20 @@ int main() {
         }
     }
     
+
+    //sort ascending 
+    int arr2[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr2) / sizeof(arr2[0]);
+    cout << "Original array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr2[i] << " ";
+    }
+    s.bubbleSort(arr2, n);
+    cout << "\nSorted array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr2[i] << " ";
+    }
+    
     cout << endl;
     cout << "===== STACK DEMONSTRATION COMPLETE =====" << endl;
     

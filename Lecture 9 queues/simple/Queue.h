@@ -25,6 +25,9 @@ public:
     void display();
     void mergequeues(Queue& q1, Queue& q2);
      void circularBehaviorDemo();
+     //copy constructor and assignment operator
+    Queue(const Queue& other);  
+    Queue& operator=(const Queue& other);
 };
 
 #endif

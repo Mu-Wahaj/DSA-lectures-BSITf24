@@ -35,7 +35,7 @@ bool sorted::isFull() const
 bool sorted::isFull() const
 {
 
-    if (currentSize == 0)
+    if (currentSize == maxSize)
     {
         return true;
     }
@@ -49,14 +49,14 @@ int sorted::getLength() const
 
 bool sorted::insert(int val)
 {
-    if (isFull())
+    if (isFull()) //check if the list is full
         return false;
 
-    int i = currentSize - 1;
+    int i = currentSize - 1;//start from the last element
 
-    while (i >= 0 && arr[i] > val)
+    while (i >= 0 && arr[i] > val) //what is happening is the index of the last element, and we are comparing it with the value we want to insert, if the last element is greater than the value we want to insert, we need to shift it to the right, and we need to keep shifting until we find the correct position for the value we want to insert
     {
-        arr[i + 1] = arr[i];
+        arr[i + 1] = arr[i]; //here i is the index of the last element, and we are shifting it to the right, so we need to assign it to the index of the last element + 1, and then we need to decrement i to check the next element means we move last elmnt to forword and check the next one if it is greater than the value we want to insert or not, if it is greater than the value we want to insert, we need to shift it to the right as well, and we need to keep shifting until we find the correct position for the value we want to insert
         i--;
     }
 
@@ -72,7 +72,7 @@ bool sorted::deleteItem(int index, int &val)
 
     val = arr[index];
 
-    for (int i = index; i < currentSize - 1; i++)
+    for (int i = index; i < currentSize - 1; i++) //here we are starting from the index of the element we want to delete, and we are shifting all the elements to the left, so we need to assign the next element to the current element, and we need to keep shifting until we reach the end of the list, and then we need to decrement the current size of the list
         arr[i] = arr[i + 1];
 
     currentSize--;
@@ -130,7 +130,8 @@ bool sorted::operator==(const sorted &otherList) const
     return true;
 }
 
-//dosent matter wer the element is 
+
+//below functon is order intensive the elemen in A is found soemwher in B but not in the same index, so we need to check all the elements in B to find the match for the element in A, and we need to keep track of the matched elements in B to avoid matching the same element in B with multiple elements in A, so we need to use a boolean array to keep track of the matched elements in B, and we need to initialize it with false, and when we find a match for an element in A, we need to set the corresponding index in the boolean array to true, and we need to check if the element in A is found in B or not, if it is not found in B, we need to return false, and if it is found in B, we need to continue checking the next element in A until we reach the end of A, and if we reach the end of A without finding any unmatched element in A, we need to return true
 bool sorted::operator==(const sorted &otherList) const
 {
     if (currentSize != otherList.currentSize)
@@ -144,19 +145,18 @@ bool sorted::operator==(const sorted &otherList) const
 
         for (int j = 0; j < currentSize; j++)
         {
-            if (!matched[j] && arr[i] == otherList.arr[j] && !found)
+            if (!matched[j] && arr[i] == otherList.arr[j] && !found) //here we are checking if the element in A is found in B and it is not matched with any other element in A, if it is found in B and it is not matched with any other element in A, we need to set the corresponding index in the boolean array to true, and we need to set the found variable to true to indicate that we have found a match for the element in A, and we need to break the inner loop to check the next element in A, and if we reach the end of B without finding a match for the element in A, we need to return false, and if we find a match for the element in A, we need to continue checking the next element in A until we reach the end of A, and if we reach the end of A without finding any unmatched element in A, we need to return true
             {
                 matched[j] = true;
                 found = true;
             }
         }
 
-        if (!found)
+        if (!found)//if we reach the end of B without finding a match for the element in A, we need to return false
             return false;
     }
     return true;
 }
-
 
 int sorted::removeAll(int val)
 {
@@ -191,7 +191,7 @@ int sorted::removeAll3(int val)
     int j = 0;
     int count = 0;
 
-    while (i < currentSize)
+    while (i <=currentSize)
     {
         if (arr[i] != val)
         {
@@ -285,7 +285,7 @@ bool sorted::binarySearch(int val, int &index) const
 
     while (low <= high)
     {
-        int mid = (low + high) / 2;
+        int mid = low + (high - low) / 2;
 
         if (arr[mid] == val)
         {

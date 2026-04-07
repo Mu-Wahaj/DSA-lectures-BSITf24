@@ -19,6 +19,14 @@ public:
     void push(int value);
     void pop();
     void display();
+    void merge(LinkedStack &stack1, LinkedStack &stack2);
+
+    void linkedQueue();
+    void linkedQueueDisplay();
+    void linkedQueueDequeue();
+    void linkedQueueEnqueue(int value);
+    void linkedQueueReverse();
+    //copy constructor
 };
     
 #endif

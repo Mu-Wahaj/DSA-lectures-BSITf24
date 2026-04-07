@@ -2,10 +2,17 @@
 #include <iostream>
 using namespace std;
 
-struct Node
+void sortedInsert(LinkedList &list, int value);
+
+class Node
 {
+public:
     int data;
     Node *next;
+
+    friend class LinkedList;
+    friend void sortedInsert(LinkedList &list, int value);
+    friend class LinkedStack;
 };
 
 class LinkedList
@@ -74,7 +81,7 @@ public:
     }
 };
 // sorted insert in linked list by prev and current pointer solution
-void sortedInsert(LinkedList &list, int value)
+void sortedInsert(LinkedList &list, int value) //its is ascending order sorted insert 
 {
     Node *newNode = new Node();
     newNode->data = value;
@@ -98,11 +105,11 @@ void sortedInsert(LinkedList &list, int value)
     }
 }
 
-//homework
-//bool linkedlits::search(int value)
-//int  linkedlist::findMax()
-   //shoudl return the maximum value in the linked list else -999 if the list is empty
-//void  linkedlist:: displayReverse() //display the linked list in reverse order , iterative solution,complexity O(n) and space complexity O(1)
+// homework
+// bool linkedlits::search(int value)
+// int  linkedlist::findMax()
+// shoudl return the maximum value in the linked list else -999 if the list is empty
+// void  linkedlist:: displayReverse() //display the linked list in reverse order , iterative solution,complexity O(n) and space complexity O(1)
 
 // linkedStack class with push O(1), pop O(1) and display functions,constructor and destructor
 int main()

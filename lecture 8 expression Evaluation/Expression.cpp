@@ -25,17 +25,18 @@ int Expression::precedence(char op)
 string Expression::infixToPostfix(const string& infix)
 {
     stack<char> s;
-    string postfix;
+    int n = infix.length();
+    string postfix;//empty string to store the postfix expression
 
-    for (int i = 0; i < infix.length(); i++)
+    for (int i = 0; i < n; i++)
     {
-        char ch = infix[i];
+        char ch = infix[i];//current character in infix expression
 
-        if (ch != ' ')
+        if (ch != ' ')//ignore spaces in the infix expression eg if infix is "3 + 4" then we ignore the spaces and only process '3', '+', and '4'
         {
-            if (ch >= '0' && ch <= '9')
+            if (ch >= '0' && ch <= '9')//if the character is an operand (number), add it to the postfix expression
             {
-                postfix = postfix + ch;
+                postfix = postfix + ch;//append the operand to the postfix string eg if ch is '3' then postfix becomes "3" if it was empty before 
             }
             else
             {

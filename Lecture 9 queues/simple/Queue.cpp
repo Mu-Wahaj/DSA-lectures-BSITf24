@@ -15,9 +15,9 @@ bool Queue::enqueue(int value)
     {
         return false;
     }
-    rearIndex = (rearIndex + 1) % MAX_SIZE;
+    rearIndex = (rearIndex + 1) % MAX_SIZE;// Circular increment means that when rearIndex reaches the end of the array, it wraps around to the beginning (index 0).
     arr[rearIndex] = value;
-    count++;
+    count++;// Increment the count of elements in the queue eg: if rearIndex is at the last position of the array and we enqueue a new element, rearIndex will wrap around to 0, allowing us to utilize the space at the beginning of the array that may have been freed up by dequeuing elements.
     return true;
 }
 
@@ -181,6 +181,24 @@ void Queue::mergequeues(Queue &q1, Queue &q2)
         enqueue(q2.arr[pos]);
     }
 }
+
+//merging without the count variable
+void Queue::mergequeues(Queue &q1, Queue &q2)
+{
+    clear();
+    int i = q1.frontIndex;
+    while (i != (q1.rearIndex + 1) % MAX_SIZE)
+    {
+        enqueue(q1.arr[i]);
+        i = (i + 1) % MAX_SIZE;
+    }
+    i = q2.frontIndex;
+    while (i != (q2.rearIndex + 1) % MAX_SIZE)
+    {
+        enqueue(q2.arr[i]);
+        i = (i + 1) % MAX_SIZE;
+    }
+}
 void Queue::circularBehaviorDemo()
 {
     cout << "Demonstrating circular behavior of the queue:" << endl;
@@ -204,3 +222,34 @@ void Queue::circularBehaviorDemo()
     enqueue(90);
     display();
 }
+
+//copy constructor
+Queue::Queue(const Queue &other)
+{
+    frontIndex = other.frontIndex;
+    rearIndex = other.rearIndex;
+    count = other.count;
+    for (int i = 0; i < MAX_SIZE; i++)
+    {
+        arr[i] = other.arr[i];
+    }
+}
+
+//assighment operto 
+Queue &Queue::operator=(const Queue &other)
+{
+    if (this != &other)
+    {
+        frontIndex = other.frontIndex;
+        rearIndex = other.rearIndex;
+        count = other.count;
+        for (int i = 0; i < MAX_SIZE; i++)
+        {
+            arr[i] = other.arr[i];
+        }
+    }
+    return *this;
+}
+
+
+
