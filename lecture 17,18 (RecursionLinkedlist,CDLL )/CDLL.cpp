@@ -1,3 +1,5 @@
+
+
 #include "CDLL.h"
 #include <iostream>
 using namespace std;
@@ -35,7 +37,11 @@ bool CDLL::sorted_Insert(int val)
 
     return true;
 }
+bool merge (CDLLD& list1, CDLLD& list2) 
+{
 
+    
+}
 // Insert at beginning
 void CDLL::insertAtBeginning(int val)
 {

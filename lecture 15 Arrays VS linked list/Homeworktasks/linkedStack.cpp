@@ -75,3 +75,79 @@ void LinkedStack::merge(LinkedStack &stack1, LinkedStack &stack2)
         temp2 = temp2->next;
     }
 }
+
+////////////////////////////////////////////////////////////
+///////////////////// QUEUE FUNCTIONS ///////////////////////
+////////////////////////////////////////////////////////////
+
+/* Initialize Queue using same Node */
+void LinkedStack::linkedQueue()
+{
+    top = NULL; // using top as front
+}
+
+/* Enqueue (insert at end) */
+void LinkedStack::linkedQueueEnqueue(int value)
+{
+    Node *newNode = new Node;
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (top == NULL)
+    {
+        top = newNode;
+        return;
+    }
+
+    Node *temp = top;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+
+/* Dequeue (remove from front) */
+void LinkedStack::linkedQueueDequeue()
+{
+    if (top == NULL)
+    {
+        cout << "Queue is empty" << endl;
+        return;
+    }
+
+    Node *temp = top;
+    top = top->next;
+    delete temp;
+}
+
+/* Display Queue */
+void LinkedStack::linkedQueueDisplay()
+{
+    Node *temp = top;
+
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+
+    cout << endl;
+}
+
+/* Reverse Queue */
+void LinkedStack::linkedQueueReverse()
+{
+    Node *prev = NULL;
+    Node *curr = top;
+    Node *next = NULL;
+
+    while (curr != NULL)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    top = prev;
+}
