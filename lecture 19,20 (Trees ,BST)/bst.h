@@ -4,23 +4,23 @@
 struct Node
 {
     int data;
-    Node* left;
-    Node* right;
+    Node *left;
+    Node *right;
 };
 
 class BST
 {
 private:
-    Node* root;
+    Node *root;
 
-    Node* insert(Node* node, int val);
-    void inorder(Node* node) const;
-    void preorder(Node* node) const;
-    void postorder(Node* node) const;
-    Node* search(Node* node, int val) const;
-    Node* findMin(Node* node) const;
-    Node* remove(Node* node, int val);
-    void destroy(Node* node);
+    Node *insert(Node *node, int val);
+    void inorder(Node *node) const;
+    void preorder(Node *node) const;
+    void postorder(Node *node) const;
+    Node *search(Node *node, int val) const;
+    Node *findMin(Node *node) const;
+    Node *remove(Node *node, int val);
+    void destroy(Node *node);
 
 public:
     BST();
@@ -32,6 +32,13 @@ public:
     void postorder() const;
     bool search(int val) const;
     void remove(int val);
+    int findMin() const;
+    int findMax() const;
+    bool isEmpty() const;
+    bool isBST() const;
+    bool isBalanced() const;
+    bool isFull() const;
+    bool searchIterative(int val) const;
 };
 
 #endif

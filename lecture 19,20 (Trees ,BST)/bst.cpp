@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 #include "bst.h"
 using namespace std;
 
@@ -15,7 +16,7 @@ BST::~BST()
 }
 
 /* Destroy tree */
-void BST::destroy(Node* node)
+void BST::destroy(Node *node)
 {
     if (node == NULL)
         return;
@@ -26,7 +27,7 @@ void BST::destroy(Node* node)
 }
 
 /* Insert (recursive) */
-Node* BST::insert(Node* node, int val)
+Node *BST::insert(Node *node, int val)
 {
     if (node == NULL)
         return new Node{val, NULL, NULL};
@@ -45,7 +46,7 @@ void BST::insert(int val)
 }
 
 /* Traversals */
-void BST::inorder(Node* node) const
+void BST::inorder(Node *node) const
 {
     if (node == NULL)
         return;
@@ -55,7 +56,7 @@ void BST::inorder(Node* node) const
     inorder(node->right);
 }
 
-void BST::preorder(Node* node) const
+void BST::preorder(Node *node) const
 {
     if (node == NULL)
         return;
@@ -65,7 +66,7 @@ void BST::preorder(Node* node) const
     preorder(node->right);
 }
 
-void BST::postorder(Node* node) const
+void BST::postorder(Node *node) const
 {
     if (node == NULL)
         return;
@@ -81,7 +82,7 @@ void BST::preorder() const { preorder(root); }
 void BST::postorder() const { postorder(root); }
 
 /* Search */
-Node* BST::search(Node* node, int val) const
+Node *BST::search(Node *node, int val) const
 {
     if (node == NULL || node->data == val)
         return node;
@@ -98,7 +99,7 @@ bool BST::search(int val) const
 }
 
 /* Find minimum */
-Node* BST::findMin(Node* node) const
+Node *BST::findMin(Node *node) const
 {
     while (node && node->left != NULL)
         node = node->left;
@@ -107,7 +108,7 @@ Node* BST::findMin(Node* node) const
 }
 
 /* Delete */
-Node* BST::remove(Node* node, int val)
+Node *BST::remove(Node *node, int val)
 {
     if (node == NULL)
         return NULL;
@@ -127,18 +128,18 @@ Node* BST::remove(Node* node, int val)
         // Case 2: One child
         else if (node->left == NULL)
         {
-            Node* temp = node->right;
+            Node *temp = node->right;
             delete node;
             return temp;
         }
         else if (node->right == NULL)
         {
-            Node* temp = node->left;
+            Node *temp = node->left;
             delete node;
             return temp;
         }
         // Case 3: Two children
-        Node* temp = findMin(node->right);
+        Node *temp = findMin(node->right);
         node->data = temp->data;
         node->right = remove(node->right, temp->data);
     }
@@ -149,4 +150,90 @@ Node* BST::remove(Node* node, int val)
 void BST::remove(int val)
 {
     root = remove(root, val);
+}
+
+int BST::findMin() const
+{
+    Node *minNode = findMin(root);
+    return minNode ? minNode->data : -1; // Return -1 if tree is empty
+}
+
+int BST::findMax() const
+{
+    Node *node = root;
+    while (node && node->right != NULL)
+        node = node->right;
+
+    return node ? node->data : -1; // Return -1 if tree is empty
+}
+bool BST::isEmpty() const
+{
+    return root == NULL;
+}
+
+bool BST::isBST() const
+{
+    // Helper function to validate BST properties
+    function<bool(Node *, int, int)> validate = [&](Node *node, int min, int max)
+    {
+        if (node == NULL)
+            return true;
+        if (node->data <= min || node->data >= max)
+            return false;
+        return validate(node->left, min, node->data) && validate(node->right, node->data, max);
+    };
+
+    return validate(root, INT_MIN, INT_MAX);
+}
+bool BST::isBalanced() const
+{
+    // Helper function to check balance and calculate height
+    function<int(Node *)> checkBalance = [&](Node *node)
+    {
+        if (node == NULL)
+            return 0;
+
+        int leftHeight = checkBalance(node->left);
+        if (leftHeight == -1)
+            return -1; // Left subtree is not balanced
+
+        int rightHeight = checkBalance(node->right);
+        if (rightHeight == -1)
+            return -1; // Right subtree is not balanced
+
+        if (abs(leftHeight - rightHeight) > 1)
+            return -1; // Current node is not balanced
+
+        return max(leftHeight, rightHeight) + 1; // Return height
+    };
+
+    return checkBalance(root) != -1;
+}
+bool BST::isFull() const
+{
+    // Helper function to check if tree is full
+    function<bool(Node *)> checkFull = [&](Node *node)
+    {
+        if (node == NULL)
+            return true;
+        if ((node->left == NULL && node->right != NULL) || (node->left != NULL && node->right == NULL))
+            return false; // Node has only one child
+        return checkFull(node->left) && checkFull(node->right);
+    };
+
+    return checkFull(root);
+}
+bool BST::searchIterative(int val) const
+{
+    Node *current = root;
+    while (current != NULL)
+    {
+        if (current->data == val)
+            return true;
+        else if (val < current->data)
+            current = current->left;
+        else
+            current = current->right;
+    }
+    return false;
 }
