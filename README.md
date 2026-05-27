@@ -7,7 +7,7 @@ It includes implementations, problem-solving approaches, and notes from lectures
 
 ---
 
-## 🚀 Topics Covered
+### 🚀 Topics Covered
 
 * Arrays
 * Strings
